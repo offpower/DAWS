@@ -62,7 +62,7 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
         super(context, attrs);
     }
 
-    protected boolean initializeCamera(int width, int height) {
+    protected boolean initializeCamera(int width ,int height) {
         Log.d(TAG, "Initialize java camera");
         boolean result = true;
         synchronized (this) {
@@ -144,7 +144,8 @@ public class JavaCameraView extends CameraBridgeViewBase implements PreviewCallb
 
                     params.setPreviewFormat(ImageFormat.NV21);
                     Log.d(TAG, "Set preview size to " + Integer.valueOf((int)frameSize.width) + "x" + Integer.valueOf((int)frameSize.height));
-                    params.setPreviewSize((int)frameSize.width, (int)frameSize.height);
+                   // params.setPreviewSize((int)frameSize.width, (int)frameSize.height);
+                    params.setPreviewSize(640,480); //change view resolution
 
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH && !android.os.Build.MODEL.equals("GT-I9100"))
                         params.setRecordingHint(true);

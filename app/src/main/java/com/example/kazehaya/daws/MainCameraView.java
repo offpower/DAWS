@@ -15,6 +15,8 @@ import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 
+import java.util.concurrent.TimeUnit;
+
 
 public class MainCameraView extends Activity implements CvCameraViewListener2 {
 
@@ -52,6 +54,7 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
 
         mOpenCvCameraView.setCvCameraViewListener(this);
+
     }
 
     @Override
@@ -93,8 +96,14 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
 
     @Override
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
+
         Mat mRgb = inputFrame.rgba();
-        Mat result = DetectLine.getLine(mRgb);
+
+      //  Mat result = DetectLine.getLine(mRgb);
+        Mat result = DetectVehicle.getCar(mRgb);
+
         return result;
     }
+
+
 }

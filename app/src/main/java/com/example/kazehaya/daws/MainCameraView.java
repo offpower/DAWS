@@ -9,6 +9,7 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
+import org.opencv.core.Rect;
 
 import android.app.Activity;
 import android.util.Log;
@@ -84,6 +85,7 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
 
     @Override
     public void onCameraViewStarted(int width, int height) {
+
     }
 
     @Override
@@ -94,7 +96,8 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
     @Override
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
         Mat mRgb = inputFrame.rgba();
-        Mat result = DetectLine.getLine(mRgb);
-        return result;
+        Mat mGray = inputFrame.gray();
+        DetectLine.getLine(mRgb,mGray);
+        return mRgb;
     }
 }

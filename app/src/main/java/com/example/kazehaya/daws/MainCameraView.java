@@ -9,12 +9,12 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Mat;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
-import org.opencv.core.Rect;
 
 import android.app.Activity;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 
 public class MainCameraView extends Activity implements CvCameraViewListener2 {
@@ -24,6 +24,9 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
     private CameraBridgeViewBase mOpenCvCameraView;
 
     private int frameCount = 0;
+
+    private TextView lineNum ;
+
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -53,6 +56,9 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
 
         mOpenCvCameraView.setCvCameraViewListener(this);
+
+        lineNum = ((TextView) findViewById(R.id.line_number));
+
     }
 
     @Override
@@ -100,4 +106,5 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
         DetectLine.getLine(mRgb,mGray);
         return mRgb;
     }
+
 }

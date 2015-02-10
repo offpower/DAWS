@@ -1,6 +1,8 @@
 package com.example.kazehaya.daws;
 
+import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
+import org.opencv.objdetect.CascadeClassifier;
 
 /**
  * Created by Kazehaya on 1/21/2015.
@@ -15,4 +17,5 @@ public class Constants {
     public static double LINE_SIZE = 30;
     public static double LINE_GAP = 25;
     public static int LINE_THICK = 3;
+
 }

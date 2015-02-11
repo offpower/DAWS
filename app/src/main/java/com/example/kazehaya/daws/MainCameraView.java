@@ -22,6 +22,9 @@ import android.app.Activity;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
+import android.widget.TextView;
+
+import java.util.List;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -37,7 +40,11 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
 
     private CameraBridgeViewBase mOpenCvCameraView;
 
-    private int frameCount = 0;
+    private TextView lineNum ;
+
+    private Mat mRgb,mGray;
+
+    private List<Lines> lines;
 
     public static CascadeClassifier carDetector;
     private File mCascadeFile;
@@ -102,6 +109,8 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
 
+        lineNum = ((TextView) findViewById(R.id.line_number));
+
     }
 
     @Override
@@ -135,6 +144,9 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
 
     @Override
     public void onCameraViewStarted(int width, int height) {
+        mRgb = new Mat();
+        mGray = new Mat();
+
     }
 
     @Override
@@ -145,12 +157,11 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
     @Override
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
 
-        Mat mRgb = inputFrame.rgba();
-    //  Mat result = DetectLine.getLine(mRgb);
-        Mat result = DetectVehicle.getCar(mRgb);
-
-        return result;
+        mRgb = inputFrame.rgba();
+        mGray = inputFrame.gray();
+        DetectLine.getLine(mRgb,mGray);
+        DetectVehicle.getCar(mRgb);
+        return mRgb;
     }
-
 
 }

@@ -61,7 +61,7 @@ public  class DetectVehicle extends MainCameraView {
         }
     }
     */
-    public static Mat getCar(Mat rgb){
+    public static void getCar(Mat rgb){
 
         String TAG ="" ;
         Mat mGray=new Mat();
@@ -86,7 +86,6 @@ public  class DetectVehicle extends MainCameraView {
             Log.i(TAG, "draw retangle");
         }
 
-    return rgb;
     }
 
 }

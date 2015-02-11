@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DetectLine {
-    private static final String TAG = "Detect Line Method : ";
+    private static final String TAG = "Detect Line Method";
 
     public static void getLine(Mat rgb,Mat gray) {
 
@@ -24,6 +24,10 @@ public class DetectLine {
         Mat lines = new Mat();
         Rect roi = new Rect(0,240,640,240);
         List<Lines> filteredLines = new ArrayList<>();
+        Point start,end;
+
+        double[] vect;
+        double x1,y1,x2,y2,angle;
 
         Mat mRgbRoi = new Mat(gray,roi); // Set ROI
 
@@ -31,31 +35,44 @@ public class DetectLine {
         Imgproc.Canny(guassians,contours,Constants.LOW_THRESHOLD,Constants.HIGH_THRESHOLD); // apply Canny's Edge Detection
         Imgproc.HoughLinesP(contours,lines,Constants.RHO,Constants.THETA,Constants.HOUGH_THRESHOLD,Constants.LINE_SIZE,Constants.LINE_GAP);
 
-        //Log.i(TAG,"Line Count : " + lines.cols());
-
         for (int i = 0 ; i < lines.cols() ; i++) {
 
-            double[] vect = lines.get(0,i);
+            vect = lines.get(0,i);
 
-            double x1 = vect[0];
-            double y1 = vect[1] + Constants.ROI_HEIGHT;
-            double x2 = vect[2];
-            double y2 = vect[3] + Constants.ROI_HEIGHT;
+            x1 = vect[0];
+            y1 = vect[1] + Constants.ROI_HEIGHT;
+            x2 = vect[2];
+            y2 = vect[3] + Constants.ROI_HEIGHT;
 
-            double angle = Math.toDegrees(Math.atan((y2-y1)/(x2-x1)));
+            angle = Math.toDegrees(Math.atan((y2-y1)/(x2-x1)));
 
             if(Math.abs(angle) > 30) {
                 filteredLines.add(new Lines(x1,y1,x2,y2));
             }
-
-            //Log.i(TAG," Start (x,y) = (" + x1 + "," + y1 + ") End (x,y) = (" + x2 + "," + y2 + ") Angle : " + angle);
         }
 
+        Log.i(TAG,"Filtered Line : " + filteredLines.size());
+
         for (int i = 0 ; i < filteredLines.size() ; i++) {
+            start = filteredLines.get(i).getStart();
+            end = filteredLines.get(i).getEnd();
+            //Log.i(TAG,"Start (" + start.x + "," + start.y + ") End (" + end.x + "," + end.y + ")");
             Core.line(rgb, filteredLines.get(i).getStart(), filteredLines.get(i).getEnd(), Constants.BLUE, Constants.LINE_THICK);
         }
 
-
     }
 
+    public static void DetectLane(ArrayList<Lines> lines) {
+        int length = lines.size();
+        Point start,end;
+        for (Lines line : lines) {
+            start = line.getStart();
+            end = line.getEnd();
+            if( start.x < 210 || end.x < 210 || start.x > 430 || end.x > 430) {
+                // Do Something
+
+            }
+        }
+
+    }
 }

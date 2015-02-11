@@ -16,6 +16,8 @@ import android.view.SurfaceView;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import java.util.List;
+
 
 public class MainCameraView extends Activity implements CvCameraViewListener2 {
 
@@ -23,10 +25,11 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
 
     private CameraBridgeViewBase mOpenCvCameraView;
 
-    private int frameCount = 0;
-
     private TextView lineNum ;
 
+    private Mat mRgb,mGray;
+
+    private List<Lines> lines;
 
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
@@ -91,6 +94,8 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
 
     @Override
     public void onCameraViewStarted(int width, int height) {
+        mRgb = new Mat();
+        mGray = new Mat();
 
     }
 
@@ -101,8 +106,8 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
 
     @Override
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
-        Mat mRgb = inputFrame.rgba();
-        Mat mGray = inputFrame.gray();
+        mRgb = inputFrame.rgba();
+        mGray = inputFrame.gray();
         DetectLine.getLine(mRgb,mGray);
         return mRgb;
     }

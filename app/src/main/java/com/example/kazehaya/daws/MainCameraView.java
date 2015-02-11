@@ -39,8 +39,9 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
 
     private int frameCount = 0;
 
-    private CascadeClassifier      carDetector;
-    private File                   mCascadeFile;
+    public static CascadeClassifier carDetector;
+    private File mCascadeFile;
+
     private BaseLoaderCallback mLoaderCallback = new BaseLoaderCallback(this) {
         @Override
         public void onManagerConnected(int status) {
@@ -50,7 +51,6 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
                     Log.i(TAG, "OpenCV loaded successfully");
 
                     // Load native library after(!) OpenCV initialization
-                 //   System.loadLibrary("detection_based_tracker");
 
                     try {
                         // load cascade file from application resources
@@ -74,9 +74,7 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
                         } else
                             Log.i(TAG, "Loaded cascade classifier from " + mCascadeFile.getAbsolutePath());
 
-                        //mNativeDetector = new DetectionBasedTracker(mCascadeFile.getAbsolutePath(), 0);
-
-                      //  cascadeDir.delete();
+                        //cascadeDir.delete();
 
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -102,7 +100,6 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
         setContentView(R.layout.activity_main_camera_view);
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.java_camera_view);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
-
         mOpenCvCameraView.setCvCameraViewListener(this);
 
     }
@@ -149,28 +146,10 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
 
         Mat mRgb = inputFrame.rgba();
-    //   Mat result = DetectLine.getLine(mRgb);
-    //  Mat result =  DetectVehicle.getCar(mRgb);
-        Mat mGray=new Mat();
-        Mat deNoiseGray=new Mat();
-        MatOfRect cars = new MatOfRect();
-        double scaleFactor = 1.2;
-        int minNeighbors = 5;
-        int flags = 0 ;
-        Size minSize=new Size(160,120);
-        Size maxSize=new Size(640,480);
+    //  Mat result = DetectLine.getLine(mRgb);
+        Mat result = DetectVehicle.getCar(mRgb);
 
-        Imgproc.cvtColor(mRgb, mGray, Imgproc.COLOR_BGRA2GRAY);
-       // fastNlMeansDenoising(mGray,deNoiseGray);
-        carDetector.detectMultiScale(mGray, cars, scaleFactor, minNeighbors, flags,  minSize,  maxSize);
-
-        Rect[] carsArray = cars.toArray();  //draw rectangle around detected object
-        for (int j = 0; j <carsArray.length; j++) {
-            Core.rectangle(mRgb, carsArray[j].tl(), carsArray[j].br(), new Scalar(0, 255, 0, 255), 3);
-            Log.i(TAG, "draw retangle");
-        }
-
-        return mRgb;
+        return result;
     }
 
 

@@ -21,9 +21,11 @@ import android.content.Context;
 /**
  * Created by UNKN0WN on 21-Jan-15.
  */
-public  class DetectVehicle extends Activity {
-    CascadeClassifier carDetector;
-  /*  public void readXML() {
+public  class DetectVehicle extends MainCameraView {
+
+    /*CascadeClassifier carDetector;
+
+        public void readXML() {
         String TAG ="" ;
         File mCascadeFile;
 
@@ -57,36 +59,32 @@ public  class DetectVehicle extends Activity {
             e.printStackTrace();
             Log.e(TAG, "Failed to load cascade. Exception thrown: " + e);
         }
-    } */
-
+    }
+    */
     public static Mat getCar(Mat rgb){
 
         String TAG ="" ;
-        //String cascadeNameXML = "D:\\Work\\Senior_Project\\DAWS\\dataset\\cas1.xml";
         Mat mGray=new Mat();
+        Mat deNoiseGray=new Mat();
         MatOfRect cars = new MatOfRect();
-        double scaleFactor = 1.1;
-        int minNeighbors = 0;
+        double scaleFactor = 1.2;
+        int minNeighbors = 4;
         int flags = 0 ;
-        Size minSize=new Size(20,20);
-        Size maxSize=new Size(200,200);
+        Size minSize=new Size(160,120);
+        Size maxSize=new Size(640,480);
 
         Imgproc.cvtColor(rgb, mGray, Imgproc.COLOR_BGRA2GRAY);
 
-       // CascadeClassifier carCascade = new CascadeClassifier(cascadeNameXML);
+        // fastNlMeansDenoising(mGray,deNoiseGray);
 
-
-
-        //carDetector.detectMultiScale(mGray, cars, scaleFactor, minNeighbors, flags,  minSize,  maxSize);
+        carDetector.detectMultiScale(mGray, cars, scaleFactor, minNeighbors, flags,  minSize,  maxSize);
         Log.i(TAG, "detecting");
-        Log.i(TAG, String.valueOf(cars));
 
         Rect[] carsArray = cars.toArray();  //draw rectangle around detected object
         for (int j = 0; j <carsArray.length; j++) {
             Core.rectangle(rgb, carsArray[j].tl(), carsArray[j].br(), new Scalar(0, 255, 0, 255), 3);
             Log.i(TAG, "draw retangle");
         }
-
 
     return rgb;
     }

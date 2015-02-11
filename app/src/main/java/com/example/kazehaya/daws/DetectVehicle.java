@@ -61,7 +61,7 @@ public  class DetectVehicle extends MainCameraView {
         }
     }
     */
-    public static void getCar(Mat rgb){
+    public static void getCar(Mat rgb,Mat image){
 
         String TAG ="" ;
         Mat mGray=new Mat();
@@ -82,7 +82,7 @@ public  class DetectVehicle extends MainCameraView {
 
         Rect[] carsArray = cars.toArray();  //draw rectangle around detected object
         for (int j = 0; j <carsArray.length; j++) {
-            Core.rectangle(rgb, carsArray[j].tl(), carsArray[j].br(), new Scalar(0, 255, 0, 255), 3);
+            Core.rectangle(image, carsArray[j].tl(), carsArray[j].br(), new Scalar(0, 255, 0, 255), 3);
             Log.i(TAG, "draw retangle");
         }
 

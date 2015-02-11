@@ -42,7 +42,7 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
 
     private TextView lineNum ;
 
-    private Mat mRgb,mGray;
+    private Mat mRgb,mGray,rgb;
 
     private List<Lines> lines;
 
@@ -146,7 +146,7 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
     public void onCameraViewStarted(int width, int height) {
         mRgb = new Mat();
         mGray = new Mat();
-
+        rgb = new Mat();
     }
 
     @Override
@@ -156,11 +156,11 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
 
     @Override
     public Mat onCameraFrame(CvCameraViewFrame inputFrame) {
-
+        rgb = inputFrame.rgba();
         mRgb = inputFrame.rgba();
         mGray = inputFrame.gray();
         DetectLine.getLine(mRgb,mGray);
-        DetectVehicle.getCar(mRgb);
+        DetectVehicle.getCar(mRgb,rgb);
         return mRgb;
     }
 

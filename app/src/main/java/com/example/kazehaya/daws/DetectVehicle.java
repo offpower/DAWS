@@ -70,7 +70,7 @@ public  class DetectVehicle extends MainCameraView {
         double scaleFactor = 1.2;
         int minNeighbors = 4;
         int flags = 0 ;
-        Size minSize=new Size(160,120);
+        Size minSize=new Size(90,70);
         Size maxSize=new Size(640,480);
 
         Imgproc.cvtColor(rgb, mGray, Imgproc.COLOR_BGRA2GRAY);

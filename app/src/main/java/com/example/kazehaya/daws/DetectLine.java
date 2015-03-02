@@ -1,7 +1,10 @@
 package com.example.kazehaya.daws; /**
  * Created by Kazehaya on 1/21/2015.
  */
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import org.opencv.core.Core;
@@ -14,10 +17,13 @@ import org.opencv.imgproc.Imgproc;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.opencv.core.Core.putText;
+
 public class DetectLine {
     private static final String TAG = "Detect Line Method";
 
     public static void getLine(Mat rgb,Mat gray) {
+
 
         Mat guassians = new Mat();
         Mat contours = new Mat();
@@ -56,8 +62,23 @@ public class DetectLine {
         for (int i = 0 ; i < filteredLines.size() ; i++) {
             start = filteredLines.get(i).getStart();
             end = filteredLines.get(i).getEnd();
+
             //Log.i(TAG,"Start (" + start.x + "," + start.y + ") End (" + end.x + "," + end.y + ")");
-            Core.line(rgb, filteredLines.get(i).getStart(), filteredLines.get(i).getEnd(), Constants.BLUE, Constants.LINE_THICK);
+
+            if( start.x < 245 || end.x < 245 || start.x > 390  || end.x > 390) {
+                Core.line(rgb, filteredLines.get(i).getStart(), filteredLines.get(i).getEnd(), Constants.BLUE, Constants.LINE_THICK);
+              //MainCameraView.txstatus.setText("Normal");
+            }
+            else if ( (end.y - start.y) > 15){ // Lane Departure // beep if Line.length > 15
+                ToneGenerator sound = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 600);
+
+                sound.startTone(ToneGenerator.TONE_CDMA_ONE_MIN_BEEP,600);
+                Core.line(rgb, filteredLines.get(i).getStart(), filteredLines.get(i).getEnd(), Constants.RED, Constants.LINE_THICK);
+                //putText(rgb,"laneCh!!! ",end,1,2,Constants.WHITE,2);
+                //MainCameraView.txstatus.setVisibility(View.INVISIBLE);
+                System.gc();   //  Call garbage collector for free memory
+            }
+
         }
 
     }
@@ -68,8 +89,9 @@ public class DetectLine {
         for (Lines line : lines) {
             start = line.getStart();
             end = line.getEnd();
-            if( start.x < 210 || end.x < 210 || start.x > 430 || end.x > 430) {
+            if( start.x > 210 || end.x > 210 || start.x < 430 || end.x < 430) {
                 // Do Something
+
 
             }
         }

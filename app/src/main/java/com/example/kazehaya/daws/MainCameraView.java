@@ -41,7 +41,7 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
     private CameraBridgeViewBase mOpenCvCameraView;
 
     private TextView lineNum ;
-
+    public static TextView txstatus;
     private Mat mRgb,mGray,rgb;
 
     private List<Lines> lines;
@@ -109,7 +109,8 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
 
-        lineNum = ((TextView) findViewById(R.id.line_number));
+        //lineNum = ((TextView) findViewById(R.id.txstatus));
+        txstatus =  ((TextView) findViewById(R.id.txstatus));
 
     }
 
@@ -161,6 +162,7 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
         mGray = inputFrame.gray();
         DetectLine.getLine(mRgb,mGray);
         DetectVehicle.getCar(mRgb,rgb);
+
         return mRgb;
     }
 

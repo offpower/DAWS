@@ -9,7 +9,10 @@ import org.opencv.objdetect.CascadeClassifier;
  */
 public class Constants {
 
+    public static Scalar RED = new Scalar(255,0,0);
+    public static Scalar GREEN = new Scalar(0,255,0);
     public static Scalar BLUE = new Scalar(0,0,255);
+    public static Scalar WHITE = new Scalar(255,255,255);
     public static int LOW_THRESHOLD = 1;
     public static int HIGH_THRESHOLD = 100;
     public static int HOUGH_THRESHOLD = 50;

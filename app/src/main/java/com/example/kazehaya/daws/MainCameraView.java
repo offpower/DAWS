@@ -43,7 +43,7 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
     private TextView lineNum ;
     public static TextView txstatus;
     private Mat mRgb,mGray,rgb;
-
+    public  static int CkCar;
     private List<Lines> lines;
 
     public static CascadeClassifier carDetector;
@@ -110,7 +110,7 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
         mOpenCvCameraView.setCvCameraViewListener(this);
 
         //lineNum = ((TextView) findViewById(R.id.txstatus));
-        txstatus =  ((TextView) findViewById(R.id.txstatus));
+       //  txstatus =  ((TextView) findViewById(R.id.txstatus));
 
     }
 

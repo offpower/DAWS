@@ -19,18 +19,23 @@ import java.util.List;
 
 import static org.opencv.core.Core.putText;
 
-public class DetectLine {
+public class DetectLine  extends MainCameraView{
     private static final String TAG = "Detect Line Method";
 
     public static void getLine(Mat rgb,Mat gray) {
 
+        double m,c;
 
         Mat guassians = new Mat();
         Mat contours = new Mat();
         Mat lines = new Mat();
-        Rect roi = new Rect(0,240,640,240);
+        Rect roi = new Rect(0,200,640,200);
         List<Lines> filteredLines = new ArrayList<>();
         Point start,end;
+        Point PText =new Point() ;
+        PText.x=60 ;PText.y=80 ;
+        Point PText2 =new Point() ;
+        PText2.x=60 ;PText2.y=100 ;
 
         double[] vect;
         double x1,y1,x2,y2,angle;
@@ -63,17 +68,38 @@ public class DetectLine {
             start = filteredLines.get(i).getStart();
             end = filteredLines.get(i).getEnd();
 
+            /// calculate for line  y=mx+c
+            m=(end.y - start.y)/(end.x - start.x);
+            c=start.y-(m*start.x);
+
+            Point PointTop=new Point();
+            PointTop.x=(200-c)/m ;
+            PointTop.y=200;
+
+            Point PointBot=new Point();
+            PointBot.x=(640-c)/m ;
+            PointBot.y=640;
+
             //Log.i(TAG,"Start (" + start.x + "," + start.y + ") End (" + end.x + "," + end.y + ")");
 
             if( start.x < 245 || end.x < 245 || start.x > 390  || end.x > 390) {
-                Core.line(rgb, filteredLines.get(i).getStart(), filteredLines.get(i).getEnd(), Constants.BLUE, Constants.LINE_THICK);
+                Core.line(rgb,  PointBot, PointTop, Constants.BLUE, Constants.LINE_THICK);
+
+                        putText(rgb,"InLane! ",PText,1,2,Constants.WHITE,2);
+
               //MainCameraView.txstatus.setText("Normal");
             }
-            else if ( (end.y - start.y) > 15){ // Lane Departure // beep if Line.length > 15
-                ToneGenerator sound = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 600);
+            else if (((end.y - start.y) > 15)  && CkCar==1  ) {
+                Core.line(rgb,  PointBot, PointTop, Constants.ORG, Constants.LINE_THICK);
+                putText(rgb,"Overtaking!! ",PText2,1,2,Constants.WHITE,2);
+            }
 
-                sound.startTone(ToneGenerator.TONE_CDMA_ONE_MIN_BEEP,600);
-                Core.line(rgb, filteredLines.get(i).getStart(), filteredLines.get(i).getEnd(), Constants.RED, Constants.LINE_THICK);
+            else if ( (end.y - start.y) > 15){ // Lane Departure // beep if Line.length > 15
+                ToneGenerator sound = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 200);
+                sound.startTone(ToneGenerator.TONE_CDMA_ONE_MIN_BEEP,200);
+                Core.line(rgb,  PointBot, PointTop, Constants.RED, Constants.LINE_THICK);
+                putText(rgb,"LaneChanging!! ",PText2,1,2,Constants.WHITE,2);
+               // Core.line(rgb, filteredLines.get(i).getStart(), filteredLines.get(i).getEnd(), Constants.RED, Constants.LINE_THICK);
                 //putText(rgb,"laneCh!!! ",end,1,2,Constants.WHITE,2);
                 //MainCameraView.txstatus.setVisibility(View.INVISIBLE);
                 System.gc();   //  Call garbage collector for free memory
@@ -83,18 +109,4 @@ public class DetectLine {
 
     }
 
-    public static void DetectLane(ArrayList<Lines> lines) {
-        int length = lines.size();
-        Point start,end;
-        for (Lines line : lines) {
-            start = line.getStart();
-            end = line.getEnd();
-            if( start.x > 210 || end.x > 210 || start.x < 430 || end.x < 430) {
-                // Do Something
-
-
-            }
-        }
-
-    }
 }

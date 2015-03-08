@@ -23,46 +23,56 @@ import static org.opencv.core.Core.putText;
  */
 public  class DetectVehicle extends MainCameraView {
 
-    public static void getCar(Mat rgb,Mat image){
+    public static void getCar(Mat rgb, Mat image) {
 
-        String TAG ="" ;
-        Mat mGray=new Mat();
-        Mat deNoiseGray=new Mat();
+        String TAG = "";
+        Mat mGray = new Mat();
+        Mat deNoiseGray = new Mat();
         MatOfRect cars = new MatOfRect();
         double scaleFactor = 1.2;
         int minNeighbors = 4;
-        int flags = 0 ;
-        Size minSize=new Size(90,70);
-        Size maxSize=new Size(640,480);
+        int flags = 0;
+        Size minSize = new Size(90, 70);
+        Size maxSize = new Size(640, 480);
 
         Imgproc.cvtColor(rgb, mGray, Imgproc.COLOR_BGRA2GRAY);
 
         // fastNlMeansDenoising(mGray,deNoiseGray);
-
-        carDetector.detectMultiScale(mGray, cars, scaleFactor, minNeighbors, flags,  minSize,  maxSize);
+        CkCar=0;
+        Log.i(TAG, "CKCAR=0");
+        carDetector.detectMultiScale(mGray, cars, scaleFactor, minNeighbors, flags, minSize, maxSize);
         Log.i(TAG, "detecting");
 
         Rect[] carsArray = cars.toArray();  //draw rectangle around detected object
-        for (int j = 0; j <carsArray.length; j++) {
-            Point Ptl= carsArray[j].tl() ;   //top left
-            Point Pbr= carsArray[j].br() ;   //bottom right
-            Point Ptr= new Point(Pbr.x-10,Ptl.y);
+        for (int j = 0; j < carsArray.length; j++) {
+            Point Ptl = carsArray[j].tl();   //top left
+            Point Pbr = carsArray[j].br();   //bottom right
+            Point Ptr = new Point(Pbr.x - 10, Ptl.y);
             ToneGenerator sound = new ToneGenerator(AudioManager.STREAM_ALARM, 200);
 
-            Core.rectangle(image, carsArray[j].tl(), carsArray[j].br(),Constants.GREEN, Constants.LINE_THICK);
-           // Log.i(TAG, "draw retangle");
-
+            Core.rectangle(image, carsArray[j].tl(), carsArray[j].br(), Constants.GREEN, Constants.LINE_THICK);
+            // Log.i(TAG, "draw retangle");
+            CkCar=1;
+            Log.i(TAG, "CKCAR=1");
             //if(carsArray[j].y > 240 && (carsArray[j].x > 213 && carsArray[j].x <426 ) ) {
-            if(Ptl.x > 213 && Pbr.x < 426  ) {
+            if (Ptl.x > 213 && Pbr.x < 426) {
                 sound.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
-                Core.rectangle(image, carsArray[j].tl(), carsArray[j].br(),Constants.RED, Constants.LINE_THICK);
-                putText(image,"Warning !!! ",Ptl,1,2,Constants.WHITE,2);
+                Core.rectangle(image, carsArray[j].tl(), carsArray[j].br(), Constants.RED, Constants.LINE_THICK);
+                putText(image, "Warning !!! ", Ptl, 1, 2, Constants.WHITE, 2);
 
                 System.gc();  //  Call garbage collector for free memory
             }
+
         }
 
     }
+
+    public int CkCarDetect() {
+        CkCar=1;
+        return CkCar;
+    }
+
+
 
 }
 

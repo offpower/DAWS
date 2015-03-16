@@ -4,5 +4,8 @@
     <string name="app_name">DAWS</string>
     <string name="status">Normal</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_start_screen">StartScreen</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">Driving Assistant and Warning System\non Android</string>
 
 </resources>

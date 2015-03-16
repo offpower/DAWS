@@ -40,8 +40,6 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
 
     private CameraBridgeViewBase mOpenCvCameraView;
 
-    private TextView lineNum ;
-    public static TextView txstatus;
     private Mat mRgb,mGray,rgb;
 
     private List<Lines> lines;
@@ -108,10 +106,6 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.java_camera_view);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
-
-        //lineNum = ((TextView) findViewById(R.id.txstatus));
-        txstatus =  ((TextView) findViewById(R.id.txstatus));
-
     }
 
     @Override

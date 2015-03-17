@@ -1,13 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:background="#0099cc"
+    android:layout_height="match_parent"
+    android:background="@drawable/startscreen"
     android:orientation="vertical"
     tools:context="com.example.kazehaya.daws.StartScreen"
     android:weightSum="1">
 
     <TextView android:id="@+id/app_name"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="150dp"
+        android:visibility="invisible"
         android:keepScreenOn="true" android:textColor="#ffffff"
         android:textStyle="bold" android:textSize="25sp" android:gravity="center"
         android:text="@string/full_name" />
@@ -21,14 +23,16 @@
         android:onClick="startApp"
         android:layout_gravity="center_horizontal" />
 
-<!--    <Button
-        android:id="@+id/calibrate"
-        android:layout_width="100pt"
-        android:layout_height="50pt"
-        android:textSize="40dp"
-        android:text="@string/cali_bt"
-        android:onClick="calibrate"
-        android:layout_gravity="center_horizontal" /> -->
+
+
+    <!--    <Button
+            android:id="@+id/calibrate"
+            android:layout_width="100pt"
+            android:layout_height="50pt"
+            android:textSize="40dp"
+            android:text="@string/cali_bt"
+            android:onClick="calibrate"
+            android:layout_gravity="center_horizontal" /> -->
 
 
 </LinearLayout>

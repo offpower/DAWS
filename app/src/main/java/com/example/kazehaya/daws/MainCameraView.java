@@ -7,22 +7,15 @@ import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewListener2;
-import org.opencv.core.MatOfRect;
-import org.opencv.core.Rect;
-import org.opencv.core.Scalar;
-import org.opencv.core.Size;
-import org.opencv.imgproc.Imgproc;
 import org.opencv.objdetect.CascadeClassifier;
 
 import android.app.Activity;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.view.WindowManager;
-import android.widget.TextView;
 
 import java.util.List;
 
@@ -31,7 +24,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static org.opencv.photo.Photo.fastNlMeansDenoising;
 
 
 public class MainCameraView extends Activity implements CvCameraViewListener2 {
@@ -40,11 +32,9 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
 
     private CameraBridgeViewBase mOpenCvCameraView;
 
-    private TextView lineNum ;
-    public static TextView txstatus;
     private Mat mRgb,mGray,rgb;
+
     public  static int CkCar;
-    private List<Lines> lines;
 
     public static CascadeClassifier carDetector;
     private File mCascadeFile;
@@ -108,10 +98,6 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
         mOpenCvCameraView = (CameraBridgeViewBase) findViewById(R.id.java_camera_view);
         mOpenCvCameraView.setVisibility(SurfaceView.VISIBLE);
         mOpenCvCameraView.setCvCameraViewListener(this);
-
-        //lineNum = ((TextView) findViewById(R.id.txstatus));
-       //  txstatus =  ((TextView) findViewById(R.id.txstatus));
-
     }
 
     @Override

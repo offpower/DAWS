@@ -2,24 +2,24 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:background="#0099cc"
     android:orientation="vertical"
-    tools:context="com.example.kazehaya.daws.StartScreen" >
+    tools:context="com.example.kazehaya.daws.StartScreen"
+    android:weightSum="1">
 
     <TextView android:id="@+id/app_name"
         android:layout_width="match_parent"
-        android:layout_height="200pt"
+        android:layout_height="200dp"
         android:keepScreenOn="true" android:textColor="#ffffff"
-        android:textStyle="bold" android:textSize="50sp" android:gravity="center"
+        android:textStyle="bold" android:textSize="25sp" android:gravity="center"
         android:text="@string/full_name" />
 
     <Button
         android:id="@+id/start"
-        android:layout_width="100pt"
-        android:layout_height="50pt"
-        android:textSize="40dp"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:textSize="20sp"
         android:text="@string/start_bt"
         android:onClick="startApp"
         android:layout_gravity="center_horizontal" />
-
 
 <!--    <Button
         android:id="@+id/calibrate"
@@ -29,5 +29,6 @@
         android:text="@string/cali_bt"
         android:onClick="calibrate"
         android:layout_gravity="center_horizontal" /> -->
+
 
 </LinearLayout>

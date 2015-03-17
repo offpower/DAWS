@@ -20,13 +20,14 @@
         android:onClick="startApp"
         android:layout_gravity="center_horizontal" />
 
-    <Button
+
+<!--    <Button
         android:id="@+id/calibrate"
         android:layout_width="100pt"
         android:layout_height="50pt"
         android:textSize="40dp"
         android:text="@string/cali_bt"
         android:onClick="calibrate"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center_horizontal" /> -->
 
 </LinearLayout>

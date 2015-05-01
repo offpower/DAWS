@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Looper;
+import android.os.SystemClock;
 import android.util.Log;
 import org.opencv.core.Core;
 import org.opencv.core.Point;
@@ -34,6 +35,8 @@ public  class DetectVehicle extends MainCameraView {
         int flags = 0;
         Size minSize = new Size(90, 70);
         Size maxSize = new Size(640, 480);
+        long currentTime;
+        double elapseTime;
 
         Imgproc.cvtColor(rgb, mGray, Imgproc.COLOR_BGRA2GRAY);
 
@@ -52,11 +55,19 @@ public  class DetectVehicle extends MainCameraView {
 
             Core.rectangle(image, carsArray[j].tl(), carsArray[j].br(), Constants.GREEN, Constants.LINE_THICK);
             // Log.i(TAG, "draw retangle");
+            currentTime = SystemClock.elapsedRealtime();
+            elapseTime = (currentTime - Constants.startTime)/1000.0;
+
             CkCar=1;
             Log.i(TAG, "CKCAR=1");
             //if(carsArray[j].y > 240 && (carsArray[j].x > 213 && carsArray[j].x <426 ) ) {
             if (Ptl.x > 213 && Pbr.x < 426) {
-                sound.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
+                if(elapseTime < 3) {
+                    sound.startTone(ToneGenerator.TONE_CDMA_ALERT_CALL_GUARD, 200);
+                }
+                else if(elapseTime > 60) {
+                    Constants.startTime = SystemClock.elapsedRealtime();
+                }
                 Core.rectangle(image, carsArray[j].tl(), carsArray[j].br(), Constants.RED, Constants.LINE_THICK);
                 putText(image, "Warning !!! ", Ptl, 1, 2, Constants.WHITE, 2);
 

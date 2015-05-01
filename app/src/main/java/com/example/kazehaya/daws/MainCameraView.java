@@ -2,6 +2,7 @@ package com.example.kazehaya.daws;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.Menu;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase.CvCameraViewFrame;
@@ -92,6 +93,7 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
     protected void onCreate(Bundle savedInstanceState) {
         Log.i(TAG, "called onCreate");
         super.onCreate(savedInstanceState);
+
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         setContentView(R.layout.activity_main_camera_view);
@@ -134,6 +136,7 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
         mRgb = new Mat();
         mGray = new Mat();
         rgb = new Mat();
+        Constants.timeStart = SystemClock.elapsedRealtime();
     }
 
     @Override

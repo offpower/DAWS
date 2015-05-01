@@ -23,5 +23,6 @@ public class Constants {
     public static double LINE_SIZE = 5;
     public static double LINE_GAP = 30;
     public static int LINE_THICK = 5;
+    public static long startTime;
 
 }

@@ -136,7 +136,7 @@ public class MainCameraView extends Activity implements CvCameraViewListener2 {
         mRgb = new Mat();
         mGray = new Mat();
         rgb = new Mat();
-        Constants.timeStart = SystemClock.elapsedRealtime();
+        Constants.startTime = SystemClock.elapsedRealtime();
     }
 
     @Override

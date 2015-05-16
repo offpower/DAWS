@@ -37,6 +37,7 @@ public  class DetectVehicle extends MainCameraView {
         Size maxSize = new Size(640, 480);
         long currentTime;
         double elapseTime;
+       // double timeStart;
 
         Imgproc.cvtColor(rgb, mGray, Imgproc.COLOR_BGRA2GRAY);
 
@@ -55,6 +56,7 @@ public  class DetectVehicle extends MainCameraView {
 
             Core.rectangle(image, carsArray[j].tl(), carsArray[j].br(), Constants.GREEN, Constants.LINE_THICK);
             // Log.i(TAG, "draw retangle");
+
             currentTime = SystemClock.elapsedRealtime();
             elapseTime = (currentTime - Constants.startTime)/1000.0;
 
@@ -70,7 +72,7 @@ public  class DetectVehicle extends MainCameraView {
                 }
                 Core.rectangle(image, carsArray[j].tl(), carsArray[j].br(), Constants.RED, Constants.LINE_THICK);
                 putText(image, "Warning !!! ", Ptl, 1, 2, Constants.WHITE, 2);
-
+               // timeStart = SystemClock.elapsedRealtime();
                 System.gc();  //  Call garbage collector for free memory
             }
 

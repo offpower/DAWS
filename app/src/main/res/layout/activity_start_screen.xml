@@ -4,7 +4,8 @@
     android:background="@drawable/startscreen"
     android:orientation="vertical"
     tools:context="com.example.kazehaya.daws.StartScreen"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:id="@+id/Daws">
 
     <TextView android:id="@+id/app_name"
         android:layout_width="match_parent"

@@ -83,14 +83,14 @@ public class DetectLine  extends MainCameraView{
             //Log.i(TAG,"Start (" + start.x + "," + start.y + ") End (" + end.x + "," + end.y + ")");
 
             if( start.x < 245 || end.x < 245 || start.x > 390  || end.x > 390) {
-                Core.line(rgb,  PointBot, PointTop, Constants.BLUE, Constants.LINE_THICK);
-
+//                Core.line(rgb,  PointBot, PointTop, Constants.BLUE, Constants.LINE_THICK);
+                    Core.line(rgb,  start, end, Constants.BLUE, Constants.LINE_THICK);
                         putText(rgb,"InLane! ",PText,1,2,Constants.WHITE,2);
 
               //MainCameraView.txstatus.setText("Normal");
             }
             else if (((end.y - start.y) > 15)  && CkCar==1  ) {
-                Core.line(rgb,  PointBot, PointTop, Constants.ORG, Constants.LINE_THICK);
+                Core.line(rgb,  start, end, Constants.ORG, Constants.LINE_THICK);
                 putText(rgb,"Overtaking!! ",PText2,1,2,Constants.WHITE,2);
             }
 
